@@ -1,82 +1,52 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
+
+	"aoc/commons/read"
 )
 
-func readLines(path string) ([]string, error) {
-	file, err := os.Open(path)
+func getLineAsInt(line string) (int, error) {
+	lineAsInt, err := strconv.Atoi(line)
 	if err != nil {
-		return nil, err
+		os.Exit(2)
 	}
-	defer file.Close()
-
-	var lines []string
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-	return lines, scanner.Err()
+	return lineAsInt, err
 }
 
 func main() {
-	lines, err := readLines("../input.txt")
+	lines, err := read.ReadFile("day1")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
 
 	ctr := 0
 	for i, line := range lines {
-		if i == 2000 || i == 1998 || i == 1999 || i == 1997 {
+		if i > 1996 {
 			continue
 		}
 
-		lineAsInt, err := strconv.Atoi(line)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(2)
-		}
-
-		lineAsInt2, err := strconv.Atoi(lines[i+1])
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(2)
-		}
-
-		lineAsInt3, err := strconv.Atoi(lines[i+2])
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(2)
-		}
+		lineAsInt, err := getLineAsInt(line)
+		lineAsInt2, err := getLineAsInt(lines[i+1])
+		lineAsInt3, err := getLineAsInt((lines[i+2]))
 
 		lineTotal := lineAsInt + lineAsInt2 + lineAsInt3
 
-		nextLineAsInt, err := strconv.Atoi(lines[i+1])
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(2)
-		}
-		nextLineAsInt2, err := strconv.Atoi(lines[i+2])
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(2)
-		}
-		nextLineAsInt3, err := strconv.Atoi(lines[i+3])
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(2)
-		}
+		nextLineAsInt, err := getLineAsInt(lines[i+1])
+		nextLineAsInt2, err := getLineAsInt(lines[i+2])
+		nextLineAsInt3, err := getLineAsInt(lines[i+3])
 
 		nextLineTotal := nextLineAsInt + nextLineAsInt2 + nextLineAsInt3
 
 		if nextLineTotal > lineTotal {
 			ctr++
 		}
-
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 	fmt.Println(ctr)
 }

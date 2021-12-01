@@ -1,30 +1,24 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
+
+	"aoc/commons/read"
 )
 
-func readLines(path string) ([]string, error) {
-	file, err := os.Open(path)
+func getLineAsInt(line string) (int, error) {
+	lineAsInt, err := strconv.Atoi(line)
 	if err != nil {
-		return nil, err
+		os.Exit(2)
 	}
-	defer file.Close()
-
-	var lines []string
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-	return lines, scanner.Err()
+	return lineAsInt, err
 }
 
 func main() {
-	lines, err := readLines("../input.txt")
+	lines, err := read.ReadFile("day1")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
@@ -35,17 +29,16 @@ func main() {
 			continue
 		}
 
-		lineAsInt, err := strconv.Atoi(line)
+		lineAsInt, err := getLineAsInt(line)
 		if err != nil {
 			fmt.Println(err)
-			os.Exit(2)
 		}
 
-		previousLineAsInt, err := strconv.Atoi(lines[i-1])
+		previousLineAsInt, err := getLineAsInt(lines[i-1])
 		if err != nil {
 			fmt.Println(err)
-			os.Exit(2)
 		}
+
 		if lineAsInt > previousLineAsInt {
 			ctr++
 		}
