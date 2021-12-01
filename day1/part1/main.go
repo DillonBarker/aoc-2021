@@ -30,11 +30,8 @@ func main() {
 		}
 
 		lineAsInt, err := getLineAsInt(line)
-		if err != nil {
-			fmt.Println(err)
-		}
-
 		previousLineAsInt, err := getLineAsInt(lines[i-1])
+
 		if err != nil {
 			fmt.Println(err)
 		}
