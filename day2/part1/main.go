@@ -10,7 +10,7 @@ import (
 	"aoc/commons/read"
 )
 
-func getLineAsInt(line string) (int, error) {
+func toInt(line string) (int, error) {
 	lineAsInt, err := strconv.Atoi(line)
 	if err != nil {
 		os.Exit(2)
@@ -26,12 +26,9 @@ func main() {
 
 	horCtr := 0
 	verCtr := 0
-
 	for i, line := range lines {
 		slice := strings.Split(line, " ")
-		fmt.Println(i, slice[0], slice[1])
-
-		sliceAsInt, err := getLineAsInt(slice[1])
+		sliceAsInt, err := toInt(slice[1])
 
 		if slice[0] == "forward" {
 			horCtr = horCtr + sliceAsInt
@@ -46,7 +43,7 @@ func main() {
 		}
 
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println(err, i)
 		}
 	}
 	fmt.Println(horCtr * verCtr)
