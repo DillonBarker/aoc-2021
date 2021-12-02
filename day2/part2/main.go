@@ -10,8 +10,8 @@ import (
 	"aoc/commons/read"
 )
 
-func toInt(line string) (int, error) {
-	lineAsInt, err := strconv.Atoi(line)
+func toInt(str string) (int, error) {
+	lineAsInt, err := strconv.Atoi(str)
 	if err != nil {
 		os.Exit(2)
 	}
@@ -32,8 +32,8 @@ func main() {
 		sliceAsInt, err := toInt(slice[1])
 
 		if slice[0] == "forward" {
-			horCtr = horCtr + sliceAsInt
-			verCtr = verCtr + (aim * sliceAsInt)
+			horCtr += sliceAsInt
+			verCtr += (aim * sliceAsInt)
 		}
 
 		if slice[0] == "down" {
