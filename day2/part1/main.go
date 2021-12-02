@@ -27,10 +27,10 @@ func main() {
 			verCtr += sliceAsInt
 		case "up":
 			verCtr -= sliceAsInt
-		}
-
-		if err != nil {
-			fmt.Println(err, i)
+		default:
+			if err != nil {
+				fmt.Println(err, i)
+			}
 		}
 	}
 	fmt.Println(horCtr * verCtr)
