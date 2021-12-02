@@ -3,23 +3,13 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
-	"strconv"
 	"strings"
 
-	"aoc/commons/read"
+	"aoc/commons/helpers"
 )
 
-func toInt(str string) (int, error) {
-	lineAsInt, err := strconv.Atoi(str)
-	if err != nil {
-		os.Exit(2)
-	}
-	return lineAsInt, err
-}
-
 func main() {
-	lines, err := read.ReadFile("day2")
+	lines, err := helpers.ReadFile("day2")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
@@ -29,19 +19,16 @@ func main() {
 	aim := 0
 	for i, line := range lines {
 		slice := strings.Split(line, " ")
-		sliceAsInt, err := toInt(slice[1])
+		sliceAsInt, err := helpers.ToInt(slice[1])
 
-		if slice[0] == "forward" {
+		switch slice[0] {
+		case "forward":
 			horCtr += sliceAsInt
 			verCtr += (aim * sliceAsInt)
-		}
-
-		if slice[0] == "down" {
+		case "down":
 			aim += sliceAsInt
-		}
-
-		if slice[0] == "up" {
-			aim += sliceAsInt
+		case "up":
+			aim -= sliceAsInt
 		}
 
 		if err != nil {

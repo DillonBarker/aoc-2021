@@ -3,22 +3,12 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
-	"strconv"
 
-	"aoc/commons/read"
+	"aoc/commons/helpers"
 )
 
-func getLineAsInt(line string) (int, error) {
-	lineAsInt, err := strconv.Atoi(line)
-	if err != nil {
-		os.Exit(2)
-	}
-	return lineAsInt, err
-}
-
 func main() {
-	lines, err := read.ReadFile("day1")
+	lines, err := helpers.ReadFile("day1")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
@@ -29,8 +19,8 @@ func main() {
 			continue
 		}
 
-		lineAsInt, err := getLineAsInt(line)
-		previousLineAsInt, err := getLineAsInt(lines[i-1])
+		lineAsInt, err := helpers.ToInt(line)
+		previousLineAsInt, err := helpers.ToInt(lines[i-1])
 
 		if err != nil {
 			fmt.Println(err)

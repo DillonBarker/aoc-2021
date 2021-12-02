@@ -1,8 +1,9 @@
-package read
+package helpers
 
 import (
 	"bufio"
 	"os"
+	"strconv"
 )
 
 func ReadFile(day string) ([]string, error) {
@@ -18,4 +19,12 @@ func ReadFile(day string) ([]string, error) {
 		lines = append(lines, scanner.Text())
 	}
 	return lines, scanner.Err()
+}
+
+func ToInt(str string) (int, error) {
+	lineAsInt, err := strconv.Atoi(str)
+	if err != nil {
+		os.Exit(2)
+	}
+	return lineAsInt, err
 }
