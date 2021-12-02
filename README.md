@@ -13,3 +13,12 @@
   |                            |   
    |                           |  
 ``` 
+## How to run
+
+Will print out the results to all my tasks.
+
+```
+./run.sh
+```
+
+
