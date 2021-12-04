@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func ReadFile(day string) ([]string, error) {
+func ReadFileIntoLines(day string) ([]string, error) {
 	file, err := os.Open(day + "/input.txt")
 	if err != nil {
 		return nil, err

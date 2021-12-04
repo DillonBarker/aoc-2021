@@ -2,43 +2,56 @@ package main
 
 import (
 	"fmt"
-	"log"
-
-	"aoc/commons/helpers"
+	"io/ioutil"
+	"strconv"
+	"strings"
 )
 
-var zeroByte byte = 48
-var oneByte byte = 49
+func main() {
+	content, _ := ioutil.ReadFile("day3/input.txt")
 
-func remove(s []string, r string) []string {
-	for i, v := range s {
-		if v == r {
-			return append(s[:i], s[i+1:]...)
-		}
-	}
-	return s
+	oxygens := strings.Split(string(content), "\n")
+	co2s := strings.Split(string(content), "\n")
+
+	oxy := filter(oxygens, func(zeros, ones int) bool {
+		return zeros > ones
+	})
+	co2 := filter(co2s, func(zeros, ones int) bool {
+		return zeros < ones || zeros == ones
+	})
+
+	c, _ := strconv.ParseInt(co2, 2, 64)
+	o, _ := strconv.ParseInt(oxy, 2, 64)
+	fmt.Println(c * o)
 }
 
-func main() {
-	bits, err := helpers.ReadFile("day3")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
+func filter(list []string, pred func(zeros, ones int) bool) string {
+	bitPosition := 0
+	for len(list) != 1 {
+		zeros := 0
+		ones := 0
 
-	gamma := [5]int{1, 0, 1, 1, 0}
-
-	fmt.Println(gamma, bits)
-	for i, digit := range gamma {
-		if digit == 49 {
-			// remove bit in bits which does not have a 1 at this position
-			for x, bit := range bits {
+		for _, o := range list {
+			if o[bitPosition] == '0' {
+				zeros++
+			} else {
+				ones++
 			}
 		}
-		if digit == 48 {
-			// remove bit in bits which does not have a 0 at this position
+
+		var bit byte
+		if pred(zeros, ones) {
+			bit = '1'
+		} else {
+			bit = '0'
 		}
-		if err != nil {
-			log.Fatalf("%d: %s", i, err)
+		for i := 0; i < len(list); i++ {
+			if list[i][bitPosition] == bit {
+				list = append(list[:i], list[i+1:]...)
+				i--
+			}
 		}
+		bitPosition++
 	}
+	return list[0]
 }

@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	lines, err := helpers.ReadFile("day3")
+	lines, err := helpers.ReadFileIntoLines("day3")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
@@ -39,6 +39,9 @@ func main() {
 		if zeroCtr > oneCtr {
 			gammaAns += "0"
 			epsilonAns += "1"
+		}
+		if zeroCtr == oneCtr {
+			gammaAns += "1"
 		}
 
 	}
