@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	lines, err := helpers.ReadFile("day1")
+	lines, err := helpers.ReadFileIntoLines("day1")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
