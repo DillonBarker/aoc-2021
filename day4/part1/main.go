@@ -12,12 +12,17 @@ func main() {
 	inputs := getInputs()
 	boards := getBoards()
 	currentInputs := []string{}
+	winningBoards := []int{}
 	for _, input := range inputs {
 		currentInputs = append(currentInputs, input)
-		for _, board := range boards {
+		for i, board := range boards {
+			if containsInt(winningBoards, i) {
+				continue
+			}
 			if checkIfWinningBoard(board, currentInputs) {
 				fmt.Println("we have the winning board")
 				calcAns(board, currentInputs)
+				winningBoards = append(winningBoards, i)
 			}
 		}
 	}
@@ -96,7 +101,22 @@ func checkIfWinningBoard(board []string, currentInputs []string) bool {
 	if check(board[20:25], currentInputs) {
 		return true
 	}
+	if checkCol(board, currentInputs) {
+		fmt.Println("col check actually worked")
+		return true
+	}
 	return false
+}
+
+func checkCol(board []string, currentInputs []string) bool {
+	score := 0
+	for i := 0; i < 5; i++ {
+		if contains(currentInputs, board[i]) && contains(currentInputs, board[i+5]) && contains(currentInputs, board[i+10]) && contains(currentInputs, board[i+15]) && contains(currentInputs, board[i+20]) {
+			score = 5
+		}
+	}
+	fmt.Println(score)
+	return score == 5
 }
 
 func check(board []string, currentInputs []string) bool {
@@ -110,6 +130,15 @@ func check(board []string, currentInputs []string) bool {
 }
 
 func contains(arr []string, str string) bool {
+	for _, a := range arr {
+		if a == str {
+			return true
+		}
+	}
+	return false
+}
+
+func containsInt(arr []int, str int) bool {
 	for _, a := range arr {
 		if a == str {
 			return true
