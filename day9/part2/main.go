@@ -12,7 +12,7 @@ func main() {
 	matrix := getMatrix()
 	lowPoints := checkSurrounding(matrix)
 	fmt.Println(lowPoints)
-	fmt.Println(sum(lowPoints) + len(lowPoints))
+	// fmt.Println(sum(lowPoints) + len(lowPoints))
 }
 
 func getMatrix() [][]int {
@@ -21,7 +21,7 @@ func getMatrix() [][]int {
 	sc := bufio.NewScanner(input)
 
 	matrix := [][]int{}
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 5; i++ {
 		line := []int{}
 		sc.Scan()
 		array := strings.Split(sc.Text(), "")
@@ -65,10 +65,15 @@ func checkSurrounding(matrix [][]int) []int {
 			if number != 9 {
 				numbers = append(numbers, number)
 			}
-
 		}
 	}
 	return numbers
+}
+
+func isLowerByOne(lowerNumber, number int) bool {
+	if number-1 == lowerNumber {
+		return true
+	}
 }
 
 func sum(array []int) int {
